@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCategoriaToCursosTable extends Migration
+class CreateCategoria extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddCategoriaToCursosTable extends Migration
      */
     public function up()
     {
-        Schema::table('cursos', function (Blueprint $table) {
-            $table->integer('numMinAlumnos')->default(5);
-            $table->string('categoria', 128)->default("SIN CATEGORIA");
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->id();
+            $table->string("nombre");
+            $table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ class AddCategoriaToCursosTable extends Migration
      */
     public function down()
     {
-        Schema::table('cursos', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('categoria');
     }
 }

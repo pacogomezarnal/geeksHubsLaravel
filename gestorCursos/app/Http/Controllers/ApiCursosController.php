@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Cursos;
+
+use Illuminate\Support\Facades\Validator;
 
 class ApiCursosController extends Controller
 {
@@ -24,18 +27,26 @@ class ApiCursosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Response $response)
     {
-        $data=$request->all();
+        $validator = Validator::make($request->all(), [
+            'titulo' => 'required',
+            'numMaxAlumnos'=>'between:5,12'
+        ]);
 
-        var_dump($data["titulo"]);
-
-        //$curso=new Cursos();
-        //$curso->titulo=$data["titulo"];
-
-        //$curso->save();
-
-        return $data;
+        if ($validator->fails()) {
+            $errores=$validator->errors();
+            $msg=[];
+            foreach($errores->keys() as $donde){
+                if($donde=="titulo") $msg[]="titulo erroneo";
+            }
+            return response()->json($msg,400);
+        }else{
+            $curso=new Cursos();
+            $curso->titulo=$request->all()["titulo"];
+            $curso->save();
+            return $curso;
+        }
     }
 
     /**
@@ -47,7 +58,6 @@ class ApiCursosController extends Controller
     public function show(Request $request,$id)
     {
         $curso = Cursos::find($id);
-
         return $curso;
     }
 
@@ -108,5 +118,9 @@ class ApiCursosController extends Controller
         $curso->delete();
 
         return Cursos::all();
+    }
+
+    private function errorMsg($msg){
+
     }
 }

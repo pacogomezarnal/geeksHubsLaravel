@@ -13,13 +13,19 @@ class CreateCursos extends Migration
      */
     public function up()
     {
+
+
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('categoria_id');
             $table->string('titulo', 128);
             $table->text('descripcion')->nullable();
             $table->integer('numMaxAlumnos')->default(10);
             $table->timestamps();
+
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
         });
+
     }
 
     /**
