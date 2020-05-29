@@ -28,12 +28,14 @@ class ApiCursosController extends Controller
     {
         $data=$request->all();
 
-        $curso=new Cursos();
-        $curso->titulo=$data["titulo"];
+        var_dump($data["titulo"]);
 
-        $curso->save();
+        //$curso=new Cursos();
+        //$curso->titulo=$data["titulo"];
 
-        return $curso;
+        //$curso->save();
+
+        return $data;
     }
 
     /**

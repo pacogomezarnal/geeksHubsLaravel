@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <td>id</td>
+    <td>titulo</td>
+    <td>descripcion</td>
+    <td>numMaxAlumnos</td>
+    <td>numMinAlumnos</td>
+    <td>categoria</td>
+  </tr>
+  <tr *ngFor="let curso of cursos">
+    <td>{{curso.id}}</td>
+    <td>{{curso.titulo}}</td>
+    <td>{{curso.descripcion}}</td>
+    <td>{{curso.numMaxAlumnos}}</td>
+    <td>{{curso.numMinAlumnos}}</td>
+    <td>{{curso.categoria}}</td>
+  </tr>
+</table>
+
+<router-outlet></router-outlet>
