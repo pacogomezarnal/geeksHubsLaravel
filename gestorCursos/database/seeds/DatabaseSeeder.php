@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Curso;
 use App\User;
-use App\Cursos;
-use App\Profesor;
-use App\Categoria;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,21 +14,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         User::truncate();
-        //Cursos::truncate();
-        //Profesor::truncate();
+        Curso::truncate();
+        DB::table('curso_user')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
+        $numCursos=10;
+        $numUsers=50;
+        $numUsersCursos=100;
 
-        $numUsuarios=10;
-        $numProfesores=3;
-        $numCursos=25;
-        $numCategorias=5;
+        factory(Curso::class,$numCursos)->create();
+        factory(User::class,$numUsers)->create();
 
-        factory(Categoria::class,$numCategorias)->create();
-        factory(User::class,$numUsuarios)->create();
-        factory(Cursos::class,$numCursos)->create();
-        //factory(Profesor::class,$numProfesores)->create();
+        for($i=0;$i<$numUsersCursos;$i++){
+            DB::table('curso_user')->insert([
+                'curso_id' => random_int(1,10),
+                'user_id' => random_int(1,50),
+            ]);
+        }
+
         // $this->call(UserSeeder::class);
     }
 }

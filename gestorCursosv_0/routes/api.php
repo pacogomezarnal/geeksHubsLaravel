@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('cursos',"ApiCursoController");
+
+//CRUD CURSOS
+//Route::resource('cursos',"ApiCursosController")->except(['create', 'edit']);
+Route::apiResource('cursos',"ApiCursosController");
