@@ -15,3 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('cursos',"ApiCursoController");
+Route::apiResource('users',"ApiUserController");
+
+Route::fallback(function(){
+    return response()->json(['mensaje'=>'Ruta no encontrada'],404);
+});

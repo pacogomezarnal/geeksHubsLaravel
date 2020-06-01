@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Curso;
+use App\User;
 
-class ApiCursoController extends Controller
+class ApiUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,9 @@ class ApiCursoController extends Controller
      */
     public function index()
     {
-        return Curso::all();
+        $users= User::all();
+
+        return response()->json(['data'=>$users],200);
     }
 
     /**
@@ -35,7 +37,21 @@ class ApiCursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules=[
+            'name'=>'required',
+            'email'=>'required|email|unique:users',
+            'password'=>'required|min:6|confirmed'
+        ];
+
+        $this->validate($request,$rules);
+
+        $data=$request->all();
+        $data['password']=bcrypt($request->password);
+
+        $user=User::create($data);
+
+        return response()->json(['data'=>$user],201);
+
     }
 
     /**
@@ -46,7 +62,9 @@ class ApiCursoController extends Controller
      */
     public function show($id)
     {
-        return Curso::findOrFail($id);
+        $user=User::findOrFail($id);
+
+        return response()->json(['data'=>$user],200);
     }
 
     /**
