@@ -1,0 +1,10 @@
+----REMOTO----
+1.- Generar respositorio remoto en github. IMPORTANTE NO CRERAR README
+    https://github.com/usuario/xxxxxxxxxxxx
+
+----LOCAL----
+2.-git init (DENTRO DE LA CARPETA DEL PROYECTO)
+3.-git add -A 
+4.-git commit -m "Proyecto inicial"
+5.-git remote add origin https://github.com/usuario/xxxxxxxxxxxx
+6.-git push origin master
