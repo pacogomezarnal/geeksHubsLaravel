@@ -35,7 +35,21 @@ class ApiCursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules=[
+            'titulo'=>'required',
+        ];
+
+        $cursoNuevo=$this->validate($request,$rules);
+
+        $data=$request->all();
+        if($request->has('imagen')){
+            $data['imagen']=$request->imagen->store('');
+        }
+
+        $curso=Curso::create($data);
+
+
+        return response()->json(['data'=>$curso],201);
     }
 
     /**

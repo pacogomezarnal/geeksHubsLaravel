@@ -18,6 +18,7 @@ class CreateCursosTable extends Migration
             $table->string('titulo', 128);
             $table->text('descripcion')->nullable();
             $table->integer('numMaxAlumnos')->default(10);
+            $table->string('imagen')->nullable();
             $table->timestamps();
         });
 
