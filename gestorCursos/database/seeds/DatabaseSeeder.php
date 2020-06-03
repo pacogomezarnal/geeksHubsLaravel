@@ -21,14 +21,13 @@ class DatabaseSeeder extends Seeder
         DB::table('curso_user')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $numCursos=10;
-        $numProfesores=10;
-        $numUsersCursos=100;
+        $numCursos=50;
+        $numUsers=50;
 
         factory(Curso::class,$numCursos)->create();
-        factory(Profesor::class,$numProfesores)->create();
+        factory(User::class,$numUsers)->create();
 
-        for($i=0;$i<$numUsersCursos;$i++){
+        for($i=0;$i<$numUsers;$i++){
             DB::table('curso_user')->insert([
                 'curso_id' => random_int(1,10),
                 'user_id' => random_int(1,50),

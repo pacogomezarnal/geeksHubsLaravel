@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('cursos',"ApiCursoController");
+Route::get('cursos/paginados/{items}',"ApiCursoController@indexPaginated");
 Route::apiResource('users',"ApiUserController");
 Route::apiResource('alumnos',"ApiAlumnoController",['only'=>['index','show']]);
 
