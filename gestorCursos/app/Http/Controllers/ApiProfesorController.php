@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 
-class ApiUserController extends Controller
+class ApiProfesorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class ApiUserController extends Controller
      */
     public function index()
     {
-        $users= User::all();
-
-        return response()->json(['data'=>$users],200);
+        //
     }
 
     /**
@@ -37,21 +34,7 @@ class ApiUserController extends Controller
      */
     public function store(Request $request)
     {
-        $rules=[
-            'name'=>'required',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:6|confirmed'
-        ];
-
-        $this->validate($request,$rules);
-
-        $data=$request->all();
-        $data['password']=bcrypt($request->password);
-
-        $user=User::create($data);
-
-        return response()->json(['data'=>$user],201);
-
+        //
     }
 
     /**
@@ -62,9 +45,7 @@ class ApiUserController extends Controller
      */
     public function show($id)
     {
-        $user=User::findOrFail($id);
-
-        return response()->json(['data'=>$user],200);
+        //
     }
 
     /**
@@ -87,30 +68,11 @@ class ApiUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::findOrFail($id);
-
-        $rules=[
-            'email'=>'email|unique:users',
-            'password'=>'min:6|confirmed'
-        ];
-
-        if($request->has('name')){
-            $user->name=$request->name;
-        }
-        if($request->has('email')&& $user->email!=$request->email){
-            $user->email=$request->email;
-        }
-        if($request->has('password')){
-            $user->password=bcrypt($request->password);
-        }
-
-        $user->save();
-
-        return response()->json(['data'=>$user],201);
+        //
     }
 
     /**
-     * Remove the specified resourcxe from storage.
+     * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

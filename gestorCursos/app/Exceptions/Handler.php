@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use \Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -52,8 +57,28 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if($exception instanceof ModelNotFoundException){
-            return response()->json(['mensaje'=>'No se encuentra el elemento buscado dentro de '.$exception->getModel()],404);
+            return $this->errorJson('No se encuentra el elemento buscado dentro de '.$exception->getModel(),404);
         }
-        return parent::render($request, $exception);
+        if($exception instanceof AuthenticationException){
+            return $this->errorJson('Se ha producido un error de autenticación: '.$request,404);
+        }
+        if($exception instanceof AuthorizationException){
+            return $this->errorJson('Se ha producido un error de autorizacion: '.$exception->getMessage(),403);
+        }
+        if($exception instanceof MethodNotAllowedException){
+            return $this->errorJson('El método no se ha definido',405);
+        }
+        if($exception instanceof NotFoundHttpException){
+            return $this->errorJson('La URL no se ha encontrado',404);
+        }
+        if($exception instanceof HttpException){
+            return $this->errorJson('Se ha producido un error: '.$exception->getMessage(),$exception->getStatusCode());
+        }
+
+        return $this->errorJson("Error no identificado: ".$exception->getMessage(),500);
+    }
+
+    private function errorJson($mensaje,$conError){
+        return response()->json(['mensaje'=>$mensaje],$conError);
     }
 }
